@@ -1,13 +1,12 @@
 [tool.poetry]
-name = "snakemake-executor-plugin-cluster-generic"
+name = "snakemake-executor-plugin-cemm-hpc"
 version = "1.0.9"
 description = ""
-authors = ["Johannes Koester <johannes.koester@uni-due.de>"]
+authors = ["lutrarutra"]
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/snakemake/snakemake-executor-plugin-cluster-generic"
-documentation = "https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/cluster-generic.html"
-keywords = ["snakemake", "plugin", "executor", "cluster"]
+repository = "https://github.com/lutrarutra/snakemake-executor-plugin-cemm-hpc"
+keywords = ["snakemake", "plugin", "executor", "cluster", "cemm", "hpc"]
 
 [tool.poetry.dependencies]
 python = "^3.11"

@@ -14,7 +14,7 @@ from snakemake_interface_common.exceptions import WorkflowError, ApiError
 
 class TestWorkflowsBase(snakemake.common.tests.TestWorkflowsLocalStorageBase):
     def get_executor(self) -> str:
-        return "cluster-generic"
+        return "cluster-cemm"
 
     def _get_cmd(self, cmd) -> str:
         return str((Path(__file__).parent / cmd).absolute())

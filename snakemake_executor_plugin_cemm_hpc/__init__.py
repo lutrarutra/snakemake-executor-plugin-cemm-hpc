@@ -1,8 +1,3 @@
-__author__ = "Johannes Köster, Manuel Holtgrewe"
-__copyright__ = "Copyright 2023, Johannes Köster, Manuel Holtgrewe"
-__email__ = "johannes.koester@uni-due.de"
-__license__ = "MIT"
-
 from dataclasses import dataclass, field
 import os
 import shlex
@@ -10,6 +5,7 @@ import subprocess
 import sys
 import threading
 import time
+import re
 from typing import Generator, List, Optional
 
 from snakemake_interface_common.exceptions import WorkflowError
@@ -78,7 +74,7 @@ class Executor(RemoteExecutor):
     def __post_init__(self):
         if self.workflow.executor_settings.submit_cmd is None:
             raise WorkflowError(
-                "You have to specify a submit command via --cluster-generic-submit-cmd."
+                "You have to specify a submit command via --cluster-cemm-submit-cmd."
             )
 
         self.sidecar_vars = None
@@ -115,7 +111,9 @@ class Executor(RemoteExecutor):
 
         if self.workflow.executor_settings.status_cmd:
             ext_jobid = self.dag.incomplete_external_jobid(job)
+
             if ext_jobid:
+
                 # Job is incomplete and still running.
                 # We simply register it and wait for completion or failure.
                 self.logger.info(
@@ -168,6 +166,12 @@ class Executor(RemoteExecutor):
 
         if ext_jobid and ext_jobid[0]:
             ext_jobid = ext_jobid[0].strip()
+
+            if (match := re.match(r"Submitted batch job (\d+)", ext_jobid)):
+                ext_jobid = match.group(1)
+            else:
+                print(f"Error: Could not parse external job id from string '{ext_jobid}'")
+            
             job_info.external_jobid = ext_jobid
 
             self.external_jobid.update((f, ext_jobid) for f in job.output)
