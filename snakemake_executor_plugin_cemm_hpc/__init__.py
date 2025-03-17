@@ -176,11 +176,7 @@ class Executor(RemoteExecutor):
 
             self.external_jobid.update((f, ext_jobid) for f in job.output)
 
-            self.logger.info(
-                "Submitted {} {} with external jobid '{}'.".format(
-                    "group job" if job.is_group() else "job", job.jobid, ext_jobid
-                )
-            )
+            self.logger.info(f"Submitted {'group job' if job.is_group() else 'job'} '{job.name}' [{job.jobid}] with external jobid '{ext_jobid}'.")
 
         self.report_job_submission(job_info)
 
